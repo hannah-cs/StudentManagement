@@ -10,7 +10,6 @@ public class CLIMenu {
         this.userManagement = userManagement;
         this.dataManagement = dataManagement;
     }
-
     public void displayMenu() {
         try {
             Scanner scanner = new Scanner(System.in);

@@ -3,11 +3,19 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class UserManagement {
+    DataManagement dataManagement;
     List<String> passwords = new ArrayList<>();
     List<UserManagement> allUsers = new ArrayList<>();
     List<Admin> admins = new ArrayList<>();
     List<Student> students = new ArrayList<>();
     List<Teacher> teachers = new ArrayList<>();
+
+    public void setDataManagement(DataManagement dataManagement) {
+        this.dataManagement = dataManagement;
+        dataManagement.readUserDataFromFile(UserRole.ADMIN);
+        dataManagement.readUserDataFromFile(UserRole.STUDENT);
+        dataManagement.readUserDataFromFile(UserRole.TEACHER);
+    }
 
 
     public void registerUser(String username, String password, UserRole role) {
