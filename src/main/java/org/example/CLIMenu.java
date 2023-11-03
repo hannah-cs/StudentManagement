@@ -99,5 +99,86 @@ public class CLIMenu {
                 }
             }
         }
+        else if (nextStep.equals("studentManager")) {
+            System.out.println("You must be an admin to access this option.");
+            System.out.println("Admin username:");
+            String username = scanner.nextLine();
+            System.out.println("Admin password:");
+            String password = scanner.nextLine();
+            if (!userManagement.loginUser(username, password, UserRole.ADMIN)){
+                System.out.println("Access denied.");
+            } else {
+                System.out.println("What would you like to do?");
+                System.out.println("1. View all students");
+                System.out.println("2. Register new student");
+                System.out.println("3. Update existing student");
+                System.out.println("4. Delete student");
+                String choice5 = scanner.nextLine();
+                String nextStep1 = "";
+                switch (choice5) {
+                    case "1":
+                        nextStep1 = "view";
+                        break;
+                    case "2":
+                        nextStep1 = "register";
+                        break;
+                    case "3":
+                        nextStep1 = "update";
+                        break;
+                    case "4":
+                        nextStep1 = "delete";
+                        break;
+                    default:
+                        System.out.println("Not a valid option");
+                }
+                if (nextStep1.contains("view")){
+                    System.out.println("All registered students:");
+                    System.out.println(userManagement.students);
+                } else if (nextStep1.contains("register")) {
+                    System.out.println("Register new student. Create a username:");
+                    String usernameStudent = scanner.nextLine();
+                    System.out.println("Create a password:");
+                    String passwordStudent = scanner.nextLine();
+                    userManagement.registerUser(usernameStudent, passwordStudent, UserRole.STUDENT);
+                    System.out.println("Successfully registered "+usernameStudent);
+                } else if (nextStep1.contains("update")) {
+                    System.out.println("Please enter the username of the student you'd like to update");
+                    String usernameStudent = scanner.nextLine();
+                    boolean studentFound = false;
+                    for (Student student : userManagement.students){
+                        if (student.getUsername().equals(usernameStudent)) {
+                            studentFound = true;
+                            System.out.println(student.getUsername()+" found. Enter new username");
+                            String newUsername = scanner.nextLine();
+                            student.setUsername(newUsername);
+                            System.out.println("Successfully updated username to "+student.getUsername());
+                        }
+                    }
+                    if (!studentFound){
+                        System.out.println("Could not find student '"+usernameStudent+"'");
+                    }
+                } else if (nextStep1.contains("delete")) {
+                    System.out.println("Enter username of student you want to delete:");
+                    String deleteStudent = scanner.nextLine();
+                    boolean studentFound = false;
+                    for (Student student : userManagement.students){
+                        if (student.getUsername().equals(deleteStudent)) {
+                            studentFound = true;
+                            System.out.println("Are you sure you want to delete "+student.getUsername()+"? (y/n)");
+                            String confirmDelete = scanner.nextLine();
+                            if (confirmDelete.equals("y")) {
+                                userManagement.students.remove(student);
+                                System.out.println("Successfully deleted "+student.getUsername());
+                            } else {
+                                System.out.println(student.getUsername()+" not deleted.");
+                            }
+                        }
+                    }
+                    if (!studentFound){
+                        System.out.println("Could not find student '"+deleteStudent+"'");
+                    }
+                }
+            }
+        }
     }
 }
