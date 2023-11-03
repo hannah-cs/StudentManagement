@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import static java.lang.Integer.parseInt;
 
 public class Student extends StudentUser {
     static List<Student> allStudents = new ArrayList<>();
@@ -60,5 +61,15 @@ public class Student extends StudentUser {
 
     public Map<Course, String> getGrades(){
         return this.grades;
+    }
+
+    public static List<Student> search(String searchTerm) {
+        List<Student> searchResults = new ArrayList<>();
+        for (Student student : allStudents) {
+            if (student.name.contains(searchTerm) || student.id == parseInt(searchTerm) || student.getUsername().contains(searchTerm)) {
+                searchResults.add(student);
+            }
+        }
+        return searchResults;
     }
 }

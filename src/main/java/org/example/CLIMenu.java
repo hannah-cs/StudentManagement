@@ -121,10 +121,11 @@ public class CLIMenu {
                 } else {
                     System.out.println("What would you like to do?");
                     System.out.println("1. View all students");
-                    System.out.println("2. Register new student");
-                    System.out.println("3. Update existing student");
-                    System.out.println("4. Delete student");
-                    System.out.println("5. Set grade for student");
+                    System.out.println("2. Search students");
+                    System.out.println("3. Register new student");
+                    System.out.println("4. Update existing student");
+                    System.out.println("5. Delete student");
+                    System.out.println("6. Set grade for student");
                     String choice5 = scanner.nextLine();
                     String nextStep1 = "";
                     switch (choice5) {
@@ -132,15 +133,18 @@ public class CLIMenu {
                             nextStep1 = "view";
                             break;
                         case "2":
-                            nextStep1 = "register";
+                            nextStep1 = "search";
                             break;
                         case "3":
-                            nextStep1 = "update";
+                            nextStep1 = "register";
                             break;
                         case "4":
-                            nextStep1 = "delete";
+                            nextStep1 = "update";
                             break;
                         case "5":
+                            nextStep1 = "delete";
+                            break;
+                        case "6":
                             nextStep1 = "grade";
                             break;
                         default:
@@ -149,6 +153,15 @@ public class CLIMenu {
                     if (nextStep1.contains("view")) {
                         System.out.println("All registered students:");
                         System.out.println(userManagement.studentUsers);
+                    } else if (nextStep1.contains("search")) {
+                        System.out.println("Enter search term:");
+                        String searchTerm = scanner.nextLine();
+                        if (Student.search(searchTerm) != null){
+                            System.out.println("Search results:");
+                            System.out.println(Student.search(searchTerm));
+                        } else {
+                            System.out.println("No results found.");
+                        }
                     } else if (nextStep1.contains("register")) {
                         System.out.println("Register new student. Create a username:");
                         String usernameStudent = scanner.nextLine();
