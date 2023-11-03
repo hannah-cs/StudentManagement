@@ -1,28 +1,60 @@
 package org.example;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
 
-public class Student {
-    private String username;
-    private String password;
+public class Student extends StudentUser {
+    String name;
+    int id;
+    StudentUser userDetails;
+    List<Course> enrolledIn = new ArrayList<>();
+    Map<Course, String> grades = new HashMap<>();
 
-    public Student(){};
-    public Student(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public Student(String username, String password, String name, int id) {
+        super(username, password);
+        this.name = name;
+        this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public int getId() {
+        return id;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<Course> getEnrolledIn() {
+        return enrolledIn;
+    }
+
+    public void enrollIn(Course course) {
+        this.enrolledIn.add(course);
+    }
+
+    public void unenrollFrom(Course course){
+        this.enrolledIn.remove(course);
+    }
+
+    @Override
+    public String toString(){
+        return "Student "+id+": "+name+", username: "+getUsername();
+    }
+
+    public void updateGrade(Course course, String grade){
+        grades.put(course, grade);
+    }
+
+    public Map<Course, String> getGrades(){
+        return this.grades;
     }
 }

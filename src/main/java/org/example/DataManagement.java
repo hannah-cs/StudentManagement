@@ -34,7 +34,7 @@ public class DataManagement {
                     if (userData.length >= 2) {
                         String username = userData[0].trim();
                         String password = userData[1].trim();
-                        userManagement.admins.add(new Admin(username, password));
+                        userManagement.admins.add(new AdminUser(username, password));
                     }
                 }
             } else if (role.equals(UserRole.TEACHER)) {
@@ -44,7 +44,7 @@ public class DataManagement {
                     if (userData.length >= 2) {
                         String username = userData[0].trim();
                         String password = userData[1].trim();
-                        userManagement.teachers.add(new Teacher(username, password));
+                        userManagement.teachers.add(new TeacherUser(username, password));
                     }
                 }
             } else if (role.equals(UserRole.STUDENT)) {
@@ -54,7 +54,7 @@ public class DataManagement {
                     if (userData.length >= 2) {
                         String username = userData[0].trim();
                         String password = userData[1].trim();
-                        userManagement.students.add(new Student(username, password));
+                        userManagement.students.add(new StudentUser(username, password));
                     }
                 }
             }

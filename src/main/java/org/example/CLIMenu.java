@@ -152,7 +152,7 @@ public class CLIMenu {
                         System.out.println("Please enter the username of the student you'd like to update");
                         String usernameStudent = scanner.nextLine();
                         boolean studentFound = false;
-                        for (Student student : userManagement.students) {
+                        for (StudentUser student : userManagement.students) {
                             if (student.getUsername().equals(usernameStudent)) {
                                 studentFound = true;
                                 System.out.println(student.getUsername() + " found. Enter new username");
@@ -167,8 +167,8 @@ public class CLIMenu {
                     } else if (nextStep1.contains("delete")) {
                         System.out.println("Enter username of student you want to delete:");
                         String deleteStudent = scanner.nextLine();
-                        Student studentToDelete = null;
-                        for (Student student : userManagement.students) {
+                        StudentUser studentToDelete = null;
+                        for (StudentUser student : userManagement.students) {
                             if (student.getUsername().equals(deleteStudent)) {
                                 studentToDelete = student;
                                 break;
@@ -234,7 +234,7 @@ public class CLIMenu {
                         System.out.println("Please enter the username of the teacher you'd like to update");
                         String usernameTeacher = scanner.nextLine();
                         boolean teacherFound = false;
-                        for (Teacher teacher : userManagement.teachers) {
+                        for (TeacherUser teacher : userManagement.teachers) {
                             if (teacher.getUsername().equals(usernameTeacher)) {
                                 teacherFound = true;
                                 System.out.println(teacher.getUsername() + " found. Enter new username");
@@ -249,9 +249,9 @@ public class CLIMenu {
                     } else if (nextStep1.contains("delete")) {
                         System.out.println("Enter username of teacher you want to delete:");
                         String deleteTeacher = scanner.nextLine();
-                        Teacher teacherToDelete = null;
+                        TeacherUser teacherToDelete = null;
 
-                        for (Teacher teacher : userManagement.teachers) {
+                        for (TeacherUser teacher : userManagement.teachers) {
                             if (teacher.getUsername().equals(deleteTeacher)) {
                                 teacherToDelete = teacher;
                                 break;

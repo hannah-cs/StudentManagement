@@ -1,10 +1,10 @@
 package org.example;
 
-public class Admin {
+public class TeacherUser {
     private String username;
     private String password;
 
-    public Admin(String username, String password) {
+    public TeacherUser(String username, String password) {
         this.username = username;
         this.password = password;
     }

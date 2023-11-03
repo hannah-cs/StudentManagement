@@ -1,11 +1,14 @@
 package org.example;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Course {
     String name;
     int id;
     List<Student> enrolledStudents = new ArrayList<>();
+    Map<Student, String> grades = new HashMap<>();
 
     public Course(String name, int id) {
         this.name = name;
@@ -42,5 +45,13 @@ public class Course {
     @Override
     public String toString(){
         return id+": "+name;
+    }
+    public void grade(String grade, Student student){
+        grades.put(student, grade);
+        student.updateGrade(this, grade);
+    }
+
+    public Map<Student, String> getAllGrades(){
+        return this.grades;
     }
 }
