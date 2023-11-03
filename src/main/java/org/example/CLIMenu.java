@@ -3,11 +3,12 @@ import java.util.Scanner;
 
 public class CLIMenu {
     private UserManagement userManagement;
-    private DataManagement dataManagement = new DataManagement();
+    private DataManagement dataManagement = new DataManagement(userManagement);
 
 
-    public CLIMenu(UserManagement userManagement) {
+    public CLIMenu(UserManagement userManagement, DataManagement dataManagement) {
         this.userManagement = userManagement;
+        this.dataManagement = dataManagement;
     }
 
     public void displayMenu() {
@@ -79,6 +80,7 @@ public class CLIMenu {
                     String choice4 = scanner.nextLine();
                     switch (choice4) {
                         case "1":
+                            dataManagement.readUserDataFromFile(UserRole.ADMIN);
                             if (userManagement.loginUser(username, password, UserRole.ADMIN)) {
                                 System.out.println("Successfully logged in.");
                             } else {
@@ -86,6 +88,7 @@ public class CLIMenu {
                             }
                             break;
                         case "2":
+                            dataManagement.readUserDataFromFile(UserRole.TEACHER);
                             if (userManagement.loginUser(username, password, UserRole.TEACHER)) {
                                 System.out.println("Successfully logged in.");
                             } else {
@@ -93,6 +96,7 @@ public class CLIMenu {
                             }
                             break;
                         case "3":
+                            dataManagement.readUserDataFromFile(UserRole.STUDENT);
                             if (userManagement.loginUser(username, password, UserRole.STUDENT)) {
                                 System.out.println("Successfully logged in.");
                             } else {
