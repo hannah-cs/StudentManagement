@@ -1,10 +1,13 @@
 package org.example;
+import java.io.IOException;
 import java.util.*;
 
 import static java.lang.Integer.parseInt;
 import java.util.stream.Collectors;
 
 public class Student extends StudentUser {
+    private UserManagement userManagement;
+    private DataManagement dataManagement = new DataManagement(userManagement);
     static List<Student> allStudents = new ArrayList<>();
     String name;
     int id;
@@ -56,6 +59,12 @@ public class Student extends StudentUser {
 
     public void updateGrade(Course course, String grade){
         grades.put(course, grade);
+        try {
+            String text = "\n"+course.id + "," + this.id + "," + grade;
+            dataManagement.writeToFile("grades.csv", text);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public Map<Course, String> getGrades(){
