@@ -19,48 +19,56 @@ public class UserManagement {
 
 
     public void registerUser(String username, String password, UserRole role) {
-        switch (role) {
-            case ADMIN:
-                AdminUser admin = new AdminUser(username, password);
-                adminUsers.add(admin);
-                passwords.add(password);
-                break;
-            case TEACHER:
-                TeacherUser teacher = new TeacherUser(username, password);
-                teacherUsers.add(teacher);
-                passwords.add(password);
-                break;
-            case STUDENT:
-                StudentUser student = new StudentUser(username, password);
-                studentUsers.add(student);
-                passwords.add(password);
-                break;
+        try {
+            switch (role) {
+                case ADMIN:
+                    AdminUser admin = new AdminUser(username, password);
+                    adminUsers.add(admin);
+                    passwords.add(password);
+                    break;
+                case TEACHER:
+                    TeacherUser teacher = new TeacherUser(username, password);
+                    teacherUsers.add(teacher);
+                    passwords.add(password);
+                    break;
+                case STUDENT:
+                    StudentUser student = new StudentUser(username, password);
+                    studentUsers.add(student);
+                    passwords.add(password);
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public boolean loginUser(String username, String password, UserRole role){
-        switch (role) {
-            case ADMIN:
-                for (AdminUser admin : adminUsers){
-                    if (admin.getUsername().equals(username) && admin.getPassword().equals(password)){
-                        return true;
+    public boolean loginUser(String username, String password, UserRole role) {
+        try {
+            switch (role) {
+                case ADMIN:
+                    for (AdminUser admin : adminUsers) {
+                        if (admin.getUsername().equals(username) && admin.getPassword().equals(password)) {
+                            return true;
+                        }
                     }
-                }
-                break;
-            case TEACHER:
-                for (TeacherUser teacher : teacherUsers){
-                    if (teacher.getUsername().equals(username) && teacher.getPassword().equals(password)){
-                        return true;
+                    break;
+                case TEACHER:
+                    for (TeacherUser teacher : teacherUsers) {
+                        if (teacher.getUsername().equals(username) && teacher.getPassword().equals(password)) {
+                            return true;
+                        }
                     }
-                }
-                break;
-            case STUDENT:
-                for (StudentUser student : studentUsers){
-                    if (student.getUsername().equals(username) && student.getPassword().equals(password)){
-                        return true;
+                    break;
+                case STUDENT:
+                    for (StudentUser student : studentUsers) {
+                        if (student.getUsername().equals(username) && student.getPassword().equals(password)) {
+                            return true;
+                        }
                     }
-                }
-                break;
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }
