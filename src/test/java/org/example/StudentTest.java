@@ -27,6 +27,6 @@ class StudentTest {
         Student student = new Student("user", "pw", "Test Student", 12345);
         Student student2 = new Student("user", "pw", "Student Two", 54321);
         Student.deleteStudent(student);
-        assertEquals("Student 54321: Student Two, username: user", Student.allStudents);
+        assertEquals("[Student 54321: Student Two, username: user]", Student.allStudents);
     }
 }
