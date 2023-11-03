@@ -1,9 +1,8 @@
 package org.example;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
+
 import static java.lang.Integer.parseInt;
+import java.util.stream.Collectors;
 
 public class Student extends StudentUser {
     static List<Student> allStudents = new ArrayList<>();
@@ -71,5 +70,15 @@ public class Student extends StudentUser {
             }
         }
         return searchResults;
+    }
+    public static List<Student> sortStudentsByName() {
+        return allStudents.stream()
+                .sorted(Comparator.comparing(Student::getName))
+                .collect(Collectors.toList());
+    }
+    public static List<Student> sortStudentsById() {
+        return allStudents.stream()
+                .sorted(Comparator.comparing(Student::getId))
+                .collect(Collectors.toList());
     }
 }

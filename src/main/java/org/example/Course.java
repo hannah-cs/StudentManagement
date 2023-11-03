@@ -1,8 +1,6 @@
 package org.example;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
 
@@ -69,5 +67,16 @@ public class Course {
             }
         }
         return searchResults;
+    }
+
+    public static List<Course> sortCoursesByName() {
+        return allCourses.stream()
+                .sorted(Comparator.comparing(Course::getName))
+                .collect(Collectors.toList());
+    }
+    public static List<Course> sortCoursesById() {
+        return allCourses.stream()
+                .sorted(Comparator.comparing(Course::getId))
+                .collect(Collectors.toList());
     }
 }
