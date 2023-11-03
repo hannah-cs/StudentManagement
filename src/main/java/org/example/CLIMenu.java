@@ -160,22 +160,24 @@ public class CLIMenu {
                 } else if (nextStep1.contains("delete")) {
                     System.out.println("Enter username of student you want to delete:");
                     String deleteStudent = scanner.nextLine();
-                    boolean studentFound = false;
-                    for (Student student : userManagement.students){
+                    Student studentToDelete = null;
+                    for (Student student : userManagement.students) {
                         if (student.getUsername().equals(deleteStudent)) {
-                            studentFound = true;
-                            System.out.println("Are you sure you want to delete "+student.getUsername()+"? (y/n)");
-                            String confirmDelete = scanner.nextLine();
-                            if (confirmDelete.equals("y")) {
-                                userManagement.students.remove(student);
-                                System.out.println("Successfully deleted "+student.getUsername());
-                            } else {
-                                System.out.println(student.getUsername()+" not deleted.");
-                            }
+                            studentToDelete = student;
+                            break;
                         }
                     }
-                    if (!studentFound){
-                        System.out.println("Could not find student '"+deleteStudent+"'");
+                    if (studentToDelete != null) {
+                        System.out.println("Are you sure you want to delete " + studentToDelete.getUsername() + "? (y/n)");
+                        String confirmDelete = scanner.nextLine();
+                        if (confirmDelete.equals("y")) {
+                            userManagement.students.remove(studentToDelete);
+                            System.out.println("Successfully deleted " + studentToDelete.getUsername());
+                        } else {
+                            System.out.println(studentToDelete.getUsername() + " not deleted.");
+                        }
+                    } else {
+                        System.out.println("Could not find student '" + deleteStudent + "'");
                     }
                 }
             }
@@ -240,22 +242,25 @@ public class CLIMenu {
                 } else if (nextStep1.contains("delete")) {
                     System.out.println("Enter username of teacher you want to delete:");
                     String deleteTeacher = scanner.nextLine();
-                    boolean teacherFound = false;
-                    for (Teacher teacher : userManagement.teachers){
+                    Teacher teacherToDelete = null;
+
+                    for (Teacher teacher : userManagement.teachers) {
                         if (teacher.getUsername().equals(deleteTeacher)) {
-                            teacherFound = true;
-                            System.out.println("Are you sure you want to delete "+teacher.getUsername()+"? (y/n)");
-                            String confirmDelete = scanner.nextLine();
-                            if (confirmDelete.equals("y")) {
-                                userManagement.teachers.remove(teacher);
-                                System.out.println("Successfully deleted "+teacher.getUsername());
-                            } else {
-                                System.out.println(teacher.getUsername()+" not deleted.");
-                            }
+                            teacherToDelete = teacher;
+                            break;
                         }
                     }
-                    if (!teacherFound){
-                        System.out.println("Could not find teacher '"+deleteTeacher+"'");
+                    if (teacherToDelete != null) {
+                        System.out.println("Are you sure you want to delete " + teacherToDelete.getUsername() + "? (y/n)");
+                        String confirmDelete = scanner.nextLine();
+                        if (confirmDelete.equals("y")) {
+                            userManagement.teachers.remove(teacherToDelete);
+                            System.out.println("Successfully deleted " + teacherToDelete.getUsername());
+                        } else {
+                            System.out.println(teacherToDelete.getUsername() + " not deleted.");
+                        }
+                    } else {
+                        System.out.println("Could not find student '" + deleteTeacher + "'");
                     }
                 }
             }
