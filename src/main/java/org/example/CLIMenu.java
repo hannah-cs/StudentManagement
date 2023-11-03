@@ -179,6 +179,86 @@ public class CLIMenu {
                     }
                 }
             }
+        } else if (nextStep.equals("teacherManager")) {
+            System.out.println("You must be an admin to access this option.");
+            System.out.println("Admin username:");
+            String username = scanner.nextLine();
+            System.out.println("Admin password:");
+            String password = scanner.nextLine();
+            if (!userManagement.loginUser(username, password, UserRole.ADMIN)){
+                System.out.println("Access denied.");
+            } else {
+                System.out.println("What would you like to do?");
+                System.out.println("1. View all teachers");
+                System.out.println("2. Register new teacher");
+                System.out.println("3. Update existing teacher");
+                System.out.println("4. Delete teacher");
+                String choice5 = scanner.nextLine();
+                String nextStep1 = "";
+                switch (choice5) {
+                    case "1":
+                        nextStep1 = "view";
+                        break;
+                    case "2":
+                        nextStep1 = "register";
+                        break;
+                    case "3":
+                        nextStep1 = "update";
+                        break;
+                    case "4":
+                        nextStep1 = "delete";
+                        break;
+                    default:
+                        System.out.println("Not a valid option");
+                }
+                if (nextStep1.contains("view")){
+                    System.out.println("All registered teachers:");
+                    System.out.println(userManagement.teachers);
+                } else if (nextStep1.contains("register")) {
+                    System.out.println("Register new teacher. Create a username:");
+                    String usernameTeacher = scanner.nextLine();
+                    System.out.println("Create a password:");
+                    String passwordTeacher = scanner.nextLine();
+                    userManagement.registerUser(usernameTeacher, passwordTeacher, UserRole.STUDENT);
+                    System.out.println("Successfully registered "+usernameTeacher);
+                } else if (nextStep1.contains("update")) {
+                    System.out.println("Please enter the username of the teacher you'd like to update");
+                    String usernameTeacher = scanner.nextLine();
+                    boolean teacherFound = false;
+                    for (Teacher teacher : userManagement.teachers){
+                        if (teacher.getUsername().equals(usernameTeacher)) {
+                            teacherFound = true;
+                            System.out.println(teacher.getUsername()+" found. Enter new username");
+                            String newUsername = scanner.nextLine();
+                            teacher.setUsername(newUsername);
+                            System.out.println("Successfully updated username to "+teacher.getUsername());
+                        }
+                    }
+                    if (!teacherFound){
+                        System.out.println("Could not find teacher '"+usernameTeacher+"'");
+                    }
+                } else if (nextStep1.contains("delete")) {
+                    System.out.println("Enter username of teacher you want to delete:");
+                    String deleteTeacher = scanner.nextLine();
+                    boolean teacherFound = false;
+                    for (Teacher teacher : userManagement.teachers){
+                        if (teacher.getUsername().equals(deleteTeacher)) {
+                            teacherFound = true;
+                            System.out.println("Are you sure you want to delete "+teacher.getUsername()+"? (y/n)");
+                            String confirmDelete = scanner.nextLine();
+                            if (confirmDelete.equals("y")) {
+                                userManagement.teachers.remove(teacher);
+                                System.out.println("Successfully deleted "+teacher.getUsername());
+                            } else {
+                                System.out.println(teacher.getUsername()+" not deleted.");
+                            }
+                        }
+                    }
+                    if (!teacherFound){
+                        System.out.println("Could not find teacher '"+deleteTeacher+"'");
+                    }
+                }
+            }
         }
     }
 }
