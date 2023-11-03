@@ -6,9 +6,9 @@ public class UserManagement {
     DataManagement dataManagement;
     List<String> passwords = new ArrayList<>();
     List<UserManagement> allUsers = new ArrayList<>();
-    List<AdminUser> admins = new ArrayList<>();
-    List<StudentUser> students = new ArrayList<>();
-    List<TeacherUser> teachers = new ArrayList<>();
+    List<AdminUser> adminUsers = new ArrayList<>();
+    List<StudentUser> studentUsers = new ArrayList<>();
+    List<TeacherUser> teacherUsers = new ArrayList<>();
 
     public void setDataManagement(DataManagement dataManagement) {
         this.dataManagement = dataManagement;
@@ -22,17 +22,17 @@ public class UserManagement {
         switch (role) {
             case ADMIN:
                 AdminUser admin = new AdminUser(username, password);
-                admins.add(admin);
+                adminUsers.add(admin);
                 passwords.add(password);
                 break;
             case TEACHER:
                 TeacherUser teacher = new TeacherUser(username, password);
-                teachers.add(teacher);
+                teacherUsers.add(teacher);
                 passwords.add(password);
                 break;
             case STUDENT:
                 StudentUser student = new StudentUser(username, password);
-                students.add(student);
+                studentUsers.add(student);
                 passwords.add(password);
                 break;
         }
@@ -41,21 +41,21 @@ public class UserManagement {
     public boolean loginUser(String username, String password, UserRole role){
         switch (role) {
             case ADMIN:
-                for (AdminUser admin : admins){
+                for (AdminUser admin : adminUsers){
                     if (admin.getUsername().equals(username) && admin.getPassword().equals(password)){
                         return true;
                     }
                 }
                 break;
             case TEACHER:
-                for (TeacherUser teacher : teachers){
+                for (TeacherUser teacher : teacherUsers){
                     if (teacher.getUsername().equals(username) && teacher.getPassword().equals(password)){
                         return true;
                     }
                 }
                 break;
             case STUDENT:
-                for (StudentUser student : students){
+                for (StudentUser student : studentUsers){
                     if (student.getUsername().equals(username) && student.getPassword().equals(password)){
                         return true;
                     }

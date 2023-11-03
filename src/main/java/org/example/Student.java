@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Student extends StudentUser {
+    static List<Student> allStudents = new ArrayList<>();
     String name;
     int id;
     StudentUser userDetails;
@@ -15,6 +16,7 @@ public class Student extends StudentUser {
         super(username, password);
         this.name = name;
         this.id = id;
+        allStudents.add(this);
     }
 
     public String getName() {
@@ -39,10 +41,12 @@ public class Student extends StudentUser {
 
     public void enrollIn(Course course) {
         this.enrolledIn.add(course);
+        course.enrolledStudents.add(this);
     }
 
     public void unenrollFrom(Course course){
         this.enrolledIn.remove(course);
+        course.enrolledStudents.remove(this);
     }
 
     @Override

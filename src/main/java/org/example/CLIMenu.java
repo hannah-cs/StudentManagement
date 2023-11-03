@@ -107,12 +107,16 @@ public class CLIMenu {
                     }
                 }
             } else if (nextStep.equals("studentManager")) {
-                System.out.println("You must be an admin to access this option.");
-                System.out.println("Admin username:");
+                System.out.println("Warning: you must be an admin or teacher to access this option.");
+                System.out.println("Username:");
                 String username = scanner.nextLine();
-                System.out.println("Admin password:");
+                System.out.println("Password:");
                 String password = scanner.nextLine();
-                if (!userManagement.loginUser(username, password, UserRole.ADMIN)) {
+                boolean hasScope = false;
+                if (userManagement.loginUser(username, password, UserRole.ADMIN) || userManagement.loginUser(username, password, UserRole.TEACHER)){
+                    hasScope = true;
+                }
+                if (!hasScope) {
                     System.out.println("Access denied.");
                 } else {
                     System.out.println("What would you like to do?");
@@ -120,6 +124,7 @@ public class CLIMenu {
                     System.out.println("2. Register new student");
                     System.out.println("3. Update existing student");
                     System.out.println("4. Delete student");
+                    System.out.println("5. Set grade for student");
                     String choice5 = scanner.nextLine();
                     String nextStep1 = "";
                     switch (choice5) {
@@ -135,12 +140,15 @@ public class CLIMenu {
                         case "4":
                             nextStep1 = "delete";
                             break;
+                        case "5":
+                            nextStep1 = "grade";
+                            break;
                         default:
                             System.out.println("Not a valid option");
                     }
                     if (nextStep1.contains("view")) {
                         System.out.println("All registered students:");
-                        System.out.println(userManagement.students);
+                        System.out.println(userManagement.studentUsers);
                     } else if (nextStep1.contains("register")) {
                         System.out.println("Register new student. Create a username:");
                         String usernameStudent = scanner.nextLine();
@@ -152,7 +160,7 @@ public class CLIMenu {
                         System.out.println("Please enter the username of the student you'd like to update");
                         String usernameStudent = scanner.nextLine();
                         boolean studentFound = false;
-                        for (StudentUser student : userManagement.students) {
+                        for (StudentUser student : userManagement.studentUsers) {
                             if (student.getUsername().equals(usernameStudent)) {
                                 studentFound = true;
                                 System.out.println(student.getUsername() + " found. Enter new username");
@@ -168,7 +176,7 @@ public class CLIMenu {
                         System.out.println("Enter username of student you want to delete:");
                         String deleteStudent = scanner.nextLine();
                         StudentUser studentToDelete = null;
-                        for (StudentUser student : userManagement.students) {
+                        for (StudentUser student : userManagement.studentUsers) {
                             if (student.getUsername().equals(deleteStudent)) {
                                 studentToDelete = student;
                                 break;
@@ -178,13 +186,44 @@ public class CLIMenu {
                             System.out.println("Are you sure you want to delete " + studentToDelete.getUsername() + "? (y/n)");
                             String confirmDelete = scanner.nextLine();
                             if (confirmDelete.equals("y")) {
-                                userManagement.students.remove(studentToDelete);
+                                userManagement.studentUsers.remove(studentToDelete);
                                 System.out.println("Successfully deleted " + studentToDelete.getUsername());
                             } else {
                                 System.out.println(studentToDelete.getUsername() + " not deleted.");
                             }
                         } else {
                             System.out.println("Could not find student '" + deleteStudent + "'");
+                        }
+                    } else if (nextStep1.contains("grade")){
+                        System.out.println("Enter the ID of the student you want to grade");
+                        int idToGrade = scanner.nextInt();
+                        Student studentToGrade = null;
+                        for (Student student : Student.allStudents) {
+                            if (student.id == idToGrade) {
+                                studentToGrade = student;
+                            }
+                        }
+                        if (studentToGrade != null) {
+                            System.out.println(studentToGrade.getName()+" is currently enrolled in the following courses: "+studentToGrade.getEnrolledIn());
+                            System.out.println("Enter the id of the course you'd like to add a grade for.");
+                            int courseId = scanner.nextInt();
+                            scanner.nextLine();
+                            Course courseToGrade = null;
+                            for (Course course : studentToGrade.enrolledIn) {
+                                if (course.id == courseId) {
+                                    courseToGrade = course;
+                                }
+                            }
+                            if (courseToGrade != null){
+                                System.out.println("Enter "+studentToGrade.getName()+"'s grade for "+courseToGrade.getName());
+                                String grade = scanner.nextLine();
+                                courseToGrade.grade(studentToGrade, grade);
+                                System.out.println("Updated "+studentToGrade.getName()+"'s grade for "+courseToGrade.getName()+" to "+grade+".");
+                            } else {
+                                System.out.println("Course not found.");
+                            }
+                        } else {
+                            System.out.println("Student not found.");
                         }
                     }
                 }
@@ -222,7 +261,7 @@ public class CLIMenu {
                     }
                     if (nextStep1.contains("view")) {
                         System.out.println("All registered teachers:");
-                        System.out.println(userManagement.teachers);
+                        System.out.println(userManagement.teacherUsers);
                     } else if (nextStep1.contains("register")) {
                         System.out.println("Register new teacher. Create a username:");
                         String usernameTeacher = scanner.nextLine();
@@ -234,7 +273,7 @@ public class CLIMenu {
                         System.out.println("Please enter the username of the teacher you'd like to update");
                         String usernameTeacher = scanner.nextLine();
                         boolean teacherFound = false;
-                        for (TeacherUser teacher : userManagement.teachers) {
+                        for (TeacherUser teacher : userManagement.teacherUsers) {
                             if (teacher.getUsername().equals(usernameTeacher)) {
                                 teacherFound = true;
                                 System.out.println(teacher.getUsername() + " found. Enter new username");
@@ -251,7 +290,7 @@ public class CLIMenu {
                         String deleteTeacher = scanner.nextLine();
                         TeacherUser teacherToDelete = null;
 
-                        for (TeacherUser teacher : userManagement.teachers) {
+                        for (TeacherUser teacher : userManagement.teacherUsers) {
                             if (teacher.getUsername().equals(deleteTeacher)) {
                                 teacherToDelete = teacher;
                                 break;
@@ -261,7 +300,7 @@ public class CLIMenu {
                             System.out.println("Are you sure you want to delete " + teacherToDelete.getUsername() + "? (y/n)");
                             String confirmDelete = scanner.nextLine();
                             if (confirmDelete.equals("y")) {
-                                userManagement.teachers.remove(teacherToDelete);
+                                userManagement.teacherUsers.remove(teacherToDelete);
                                 System.out.println("Successfully deleted " + teacherToDelete.getUsername());
                             } else {
                                 System.out.println(teacherToDelete.getUsername() + " not deleted.");

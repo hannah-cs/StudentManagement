@@ -37,16 +37,18 @@ public class Course {
 
     public void enroll(Student student) {
         this.enrolledStudents.add(student);
+        student.enrolledIn.add(this);
     }
     public void unenroll(Student student){
         this.enrolledStudents.remove(student);
+        student.enrolledIn.remove(this);
     }
 
     @Override
     public String toString(){
         return id+": "+name;
     }
-    public void grade(String grade, Student student){
+    public void grade(Student student, String grade){
         grades.put(student, grade);
         student.updateGrade(this, grade);
     }
