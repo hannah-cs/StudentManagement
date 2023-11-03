@@ -90,4 +90,8 @@ public class Student extends StudentUser {
                 .sorted(Comparator.comparing(Student::getId))
                 .collect(Collectors.toList());
     }
+
+    public static void deleteStudent(Student student){
+        allStudents.remove(student);
+    }
 }
